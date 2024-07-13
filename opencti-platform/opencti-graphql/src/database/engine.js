@@ -43,6 +43,7 @@ import { ComplexSearchError, ConfigurationError, DatabaseError, EngineShardsErro
 import {
   isStixRefRelationship,
   RELATION_CREATED_BY,
+  RELATION_EXTERNAL_REFERENCE,
   RELATION_GRANTED_TO,
   RELATION_KILL_CHAIN_PHASE,
   RELATION_OBJECT_ASSIGNEE,
@@ -197,6 +198,7 @@ export const UNIMPACTED_ENTITIES_ROLE = [
   `${RELATION_GRANTED_TO}_${ROLE_FROM}`,
   `${RELATION_OBJECT_LABEL}_${ROLE_FROM}`,
   `${RELATION_KILL_CHAIN_PHASE}_${ROLE_FROM}`,
+  `${RELATION_EXTERNAL_REFERENCE}_${ROLE_FROM}`,
   // Core relationships
   `${RELATION_INDICATES}_${ROLE_TO}`,
 ];
@@ -1685,7 +1687,7 @@ const LIST_REFS = [
   RELATION_OBJECT_PARTICIPANT, RELATION_OBJECT_ASSIGNEE,
   RELATION_KILL_CHAIN_PHASE, RELATION_CREATED_BY,
   RELATION_OBJECT_LABEL, RELATION_GRANTED_TO,
-  RELATION_OBJECT_MARKING
+  RELATION_OBJECT_MARKING, RELATION_EXTERNAL_REFERENCE
 ];
 const buildLocalMustFilter = async (context, user, validFilter) => {
   const valuesFiltering = [];
@@ -3575,8 +3577,8 @@ export const elIndexElements = async (context, user, message, elements) => {
       }
       return impacts;
     }).flat();
-    const promiseFrom = bodyChildFrom.length > 0 ? elBulk({ refresh: true, timeout: BULK_TIMEOUT, body: bodyChildFrom }) : Promise.resolve();
-    const promiseTo = bodyChildTo.length > 0 ? elBulk({ refresh: true, timeout: BULK_TIMEOUT, body: bodyChildTo }) : Promise.resolve();
+    const promiseFrom = bodyChildFrom.length > 0 ? elBulk({ refresh: false, timeout: BULK_TIMEOUT, body: bodyChildFrom }) : Promise.resolve();
+    const promiseTo = bodyChildTo.length > 0 ? elBulk({ refresh: false, timeout: BULK_TIMEOUT, body: bodyChildTo }) : Promise.resolve();
     await Promise.all([promiseFrom, promiseTo]);
     return transformedElements.length;
   };
