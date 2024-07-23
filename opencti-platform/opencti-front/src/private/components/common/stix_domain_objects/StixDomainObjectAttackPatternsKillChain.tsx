@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { graphql, useQueryLoader } from 'react-relay';
 import Tooltip from '@mui/material/Tooltip';
-import { FileDownloadOutlined, FilterAltOutlined, InvertColorsOffOutlined, ViewColumnOutlined, ViewListOutlined } from '@mui/icons-material';
+import { FileDownloadOutlined, InvertColorsOffOutlined, ViewColumnOutlined, ViewListOutlined } from '@mui/icons-material';
 import { ProgressWrench } from 'mdi-material-ui';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -176,24 +176,8 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
             onSubmit={handleSearch}
           />
         </div>
+        {currentView !== 'list' && currentView !== 'courses-of-action' && (
         <div className={classes.buttons} >
-          <Tooltip
-            title={
-                currentModeOnlyActive
-                  ? t_i18n('Display the whole matrix')
-                  : t_i18n('Display only used techniques')
-              }
-          >
-            <span>
-              <IconButton
-                color={currentModeOnlyActive ? 'secondary' : 'primary'}
-                onClick={handleToggleModeOnlyActive}
-                size="large"
-              >
-                <FilterAltOutlined fontSize="medium"/>
-              </IconButton>
-            </span>
-          </Tooltip>
           <Tooltip
             title={
                 currentColorsReversed
@@ -212,6 +196,7 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
             </span>
           </Tooltip>
         </div>
+        )}
         <Box className={classes.filters} >
           <Filters
             availableFilterKeys={availableFilterKeys}
