@@ -93,6 +93,7 @@ const stixDomainObjectAttackPatternsKillChainContainerFragment = graphql`
                     }
                     killChainPhases {
                         id
+                        kill_chain_name
                         phase_name
                         x_opencti_order
                     }
