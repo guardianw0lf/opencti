@@ -16,7 +16,7 @@ import withRouter from '../../../../utils/compat-router/withRouter';
 import inject18n from '../../../../components/i18n';
 import { attackPatternsLinesQuery } from './AttackPatternsLines';
 import { computeLevel } from '../../../../utils/Number';
-import AttackPtternsMatrixBar from './AttackPtternsMatrixBar';
+import AttackPatternsMatrixBar from './AttackPatternsMatrixBar';
 import { truncate } from '../../../../utils/String';
 import { MESSAGING$ } from '../../../../relay/environment';
 import { UserContext } from '../../../../utils/hooks/useAuth';
@@ -409,7 +409,7 @@ class AttackPatternsMatrixColumnsComponent extends Component {
                   </FormControl>
                 </div>
               ) : (
-                <AttackPtternsMatrixBar
+                <AttackPatternsMatrixBar
                   currentModeOnlyActive={modeOnlyActive}
                   handleToggleModeOnlyActive={toggleModeOnlyActive.bind(this)}
                   currentColorsReversed={modeColorsReversed}
