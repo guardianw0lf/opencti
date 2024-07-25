@@ -116,7 +116,6 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
 }) => {
   const classes = useStyles();
   const { t_i18n } = useFormatter();
-  const [currentModeOnlyActive, setCurrentModeOnlyActive] = useState(false);
   const [currentColorsReversed, setCurrentColorsReversed] = useState(false);
   const [targetEntities, setTargetEntities] = useState<TargetEntity[]>([]);
   const [queryRef, loadQuery] = useQueryLoader<StixDomainObjectAttackPatternsKillChainQuery>(
@@ -125,10 +124,6 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
   const refetch = React.useCallback(() => {
     loadQuery(paginationOptions, { fetchPolicy: 'store-and-network' });
   }, [queryRef]);
-
-  const handleToggleModeOnlyActive = () => {
-    setCurrentModeOnlyActive(!currentModeOnlyActive);
-  };
 
   const handleToggleColorsReversed = () => {
     setCurrentColorsReversed(!currentColorsReversed);
@@ -311,10 +306,8 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
           <StixDomainObjectAttackPatternsKillChainMatrix
             data={data}
             searchTerm={searchTerm}
-            handleToggleModeOnlyActive={handleToggleModeOnlyActive}
             handleToggleColorsReversed={handleToggleColorsReversed}
             currentColorsReversed={currentColorsReversed}
-            currentModeOnlyActive={currentModeOnlyActive}
             handleAdd={handleAdd}
           />
         )}

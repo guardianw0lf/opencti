@@ -178,7 +178,6 @@ class AttackPatternsMatrixColumnsComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentModeOnlyActive: false,
       currentColorsReversed: false,
       currentKillChain: 'mitre-attack',
       hover: {},
@@ -217,10 +216,6 @@ class AttackPatternsMatrixColumnsComponent extends Component {
     this.setState({ hover });
   }
 
-  handleToggleModeOnlyActive() {
-    this.setState({ currentModeOnlyActive: !this.state.currentModeOnlyActive });
-  }
-
   handleToggleColorsReversed() {
     this.setState({ currentColorsReversed: !this.state.currentColorsReversed });
   }
@@ -256,25 +251,15 @@ class AttackPatternsMatrixColumnsComponent extends Component {
       attackPatterns: selectedPatterns,
       marginRight,
       searchTerm,
-      handleToggleModeOnlyActive,
       handleToggleColorsReversed,
       currentColorsReversed,
-      currentModeOnlyActive,
       hideBar,
       handleAdd,
     } = this.props;
     const { hover, menuElement, navOpen } = this.state;
-    let toggleModeOnlyActive = handleToggleModeOnlyActive;
-    if (typeof toggleModeOnlyActive !== 'function') {
-      toggleModeOnlyActive = this.handleToggleModeOnlyActive;
-    }
     let toggleColorsReversed = handleToggleColorsReversed;
     if (typeof toggleColorsReversed !== 'function') {
       toggleColorsReversed = this.handleToggleColorsReversed;
-    }
-    let modeOnlyActive = currentModeOnlyActive;
-    if (R.isNil(modeOnlyActive)) {
-      modeOnlyActive = this.state.currentModeOnlyActive;
     }
     let modeColorsReversed = currentColorsReversed;
     if (R.isNil(modeColorsReversed)) {
@@ -332,7 +317,6 @@ class AttackPatternsMatrixColumnsComponent extends Component {
       })),
       R.filter(filterSubattackPattern),
       R.filter(filterByKeyword),
-      R.filter((o) => (modeOnlyActive ? o.level > 0 : o.level >= 0)),
     )(data.attackPatterns.edges);
     const killChainPhases = R.pipe(
       R.map((n) => n.node.killChainPhases),
@@ -410,8 +394,6 @@ class AttackPatternsMatrixColumnsComponent extends Component {
                 </div>
               ) : (
                 <AttackPatternsMatrixBar
-                  currentModeOnlyActive={modeOnlyActive}
-                  handleToggleModeOnlyActive={toggleModeOnlyActive.bind(this)}
                   currentColorsReversed={modeColorsReversed}
                   handleToggleColorsReversed={toggleColorsReversed.bind(this)}
                   currentKillChain={this.state.currentKillChain}
@@ -527,10 +509,8 @@ AttackPatternsMatrixColumnsComponent.propTypes = {
   attackPatterns: PropTypes.array,
   marginRight: PropTypes.bool,
   searchTerm: PropTypes.string,
-  handleToggleModeOnlyActive: PropTypes.func,
   handleToggleColorsReversed: PropTypes.func,
   currentColorsReversed: PropTypes.bool,
-  currentModeOnlyActive: PropTypes.bool,
   hideBar: PropTypes.bool,
   handleAdd: PropTypes.func,
 };

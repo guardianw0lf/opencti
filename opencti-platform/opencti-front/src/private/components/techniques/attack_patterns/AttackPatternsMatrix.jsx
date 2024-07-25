@@ -24,10 +24,8 @@ class AttackPatternsMatrix extends Component {
       attackPatterns,
       marginRight,
       searchTerm,
-      handleToggleModeOnlyActive,
       handleToggleColorsReversed,
       currentColorsReversed,
-      currentModeOnlyActive,
       hideBar,
       handleAdd,
     } = this.props;
@@ -51,10 +49,8 @@ class AttackPatternsMatrix extends Component {
                   attackPatterns={attackPatterns}
                   marginRight={marginRight}
                   searchTerm={searchTerm ?? ''}
-                  handleToggleModeOnlyActive={handleToggleModeOnlyActive}
                   handleToggleColorsReversed={handleToggleColorsReversed}
                   currentColorsReversed={currentColorsReversed}
-                  currentModeOnlyActive={currentModeOnlyActive}
                   hideBar={hideBar}
                   handleAdd={handleAdd}
                 />
@@ -76,10 +72,8 @@ AttackPatternsMatrix.propTypes = {
   classes: PropTypes.object,
   attackPatterns: PropTypes.array,
   searchTerm: PropTypes.string,
-  handleToggleModeOnlyActive: PropTypes.func,
   handleToggleColorsReversed: PropTypes.func,
   currentColorsReversed: PropTypes.bool,
-  currentModeOnlyActive: PropTypes.bool,
   hideBar: PropTypes.bool,
   handleAdd: PropTypes.func,
 };
