@@ -17889,9 +17889,11 @@ export type PublicDashboardEdge = {
 export enum PublicDashboardsOrdering {
   Score = '_score',
   CreatedAt = 'created_at',
-  Creator = 'creator',
+  Dashboard = 'dashboard',
+  Enabled = 'enabled',
   Name = 'name',
-  UpdatedAt = 'updated_at'
+  UpdatedAt = 'updated_at',
+  UserId = 'user_id'
 }
 
 export type PublicDistribution = {
