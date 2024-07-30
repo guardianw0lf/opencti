@@ -137,7 +137,9 @@ const DataTableBody = ({
       colSizes['--table-height'] = rootRef.offsetHeight - 42; // SIZE OF CONTAINER - Nb Elements - Line Size
     } else {
       const rootSize = (document.getElementById('root')?.offsetHeight ?? 0) - settingsMessagesBannerHeight;
-      colSizes['--table-height'] = rootSize - (hasFilterComponent && (document.getElementById('filter-container')?.children.length) ? 260 : 220);
+      const filterRemoval = (hasFilterComponent && document.getElementById('filter-container')?.children.length) ? 260 : 220;
+      const tabsRemoval = document.getElementById('tabs-container')?.children.length ? 50 : 0;
+      colSizes['--table-height'] = rootSize - filterRemoval - tabsRemoval;
     }
     /* eslint-enable @typescript-eslint/no-non-null-assertion */
 

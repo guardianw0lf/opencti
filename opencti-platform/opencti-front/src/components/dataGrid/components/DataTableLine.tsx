@@ -138,6 +138,7 @@ const DataTableLine = ({
       key={row.id}
       className={classes.row}
       onClick={() => (navigable ? navigate(link) : undefined)}
+      style={{ cursor: navigable ? 'pointer' : 'unset' }}
     >
       {startsWithSelect && (
         <div
