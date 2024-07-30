@@ -34,7 +34,7 @@ test('Report CRUD', { tag: ['@report', '@knowledge', '@mutation'] }, async ({ pa
   const reportDetailsPage = new ReportDetailsPage(page);
   const reportForm = new ReportFormPage(page);
 
-  await reportPage.goto();
+  await reportPage.navigateFromMenu();
   // open nav bar once and for all
   await leftNavigation.open();
 

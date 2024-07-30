@@ -6,6 +6,26 @@ import ReportDetailsPage from '../model/reportDetails.pageModel';
 import StixDomainObjectContentTabPage from '../model/StixDomainObjectContentTab.pageModel';
 import ContainerObservablesPage from '../model/containerObservables.pageModel';
 import StixCoreObjectDataTab from '../model/StixCoreObjectDataTab.pageModel';
+import GroupingsPage from '../model/grouping.pageModel';
+import GroupingDetailsPage from '../model/groupingDetails.pageModel';
+
+/**
+ * Goal: validate that everything is opening wihtout errors.
+ * - Go on grouping
+ * @param page
+ */
+const navigateGroupings = async (page: Page) => {
+  const groupingsNameFromInitData = 'Navigation test grouping entity';
+
+  const groupingPage = new GroupingsPage(page);
+  await groupingPage.navigateFromMenu();
+  await expect(groupingPage.getPage()).toBeVisible();
+  await expect(page.getByText(groupingsNameFromInitData)).toBeVisible();
+  await groupingPage.getItemFromList(groupingsNameFromInitData).click();
+
+  const groupingsDetailsPage = new GroupingDetailsPage(page);
+  await expect(groupingsDetailsPage.getPage()).toBeVisible();
+};
 
 /**
  * Goal: validate that everything is opening wihtout errors
@@ -25,7 +45,7 @@ const navigateReports = async (page: Page) => {
   const reportNameFromInitData = 'E2E dashboard - Report - now';
 
   const reportPage = new ReportPage(page);
-  await reportPage.goto();
+  await reportPage.navigateFromMenu();
   await expect(reportPage.getPage()).toBeVisible();
   await expect(page.getByText(reportNameFromInitData)).toBeVisible();
   await reportPage.getItemFromList(reportNameFromInitData).click();
@@ -68,9 +88,7 @@ const navigateReports = async (page: Page) => {
 };
 
 const navigateAllMenu = async (page: Page) => {
-  await page.goto('/');
   const leftBarPage = new LeftBarPage(page);
-  await leftBarPage.open();
 
   // Checking Analyses menu
   await leftBarPage.clickOnMenu('Analyses');
@@ -159,6 +177,13 @@ const navigateAllMenu = async (page: Page) => {
 };
 
 test('Check navigation on all pages', { tag: ['@navigation'] }, async ({ page }) => {
-  await navigateAllMenu(page);
-  await navigateReports(page);
+  await page.goto('/');
+  const leftBarPage = new LeftBarPage(page);
+  await leftBarPage.open();
+
+  // For faster debugging, each navigated can be commented.
+  // so they should be all independent and start from the left menu.
+  // await navigateAllMenu(page);
+  // await navigateReports(page);
+  await navigateGroupings(page);
 });

@@ -3,7 +3,7 @@ import { Page } from '@playwright/test';
 export default class GroupingDetailsPage {
   constructor(private page: Page) {}
 
-  getGroupingDetailsPage() {
+  getPage() {
     return this.page.getByTestId('grouping-details-page');
   }
 
