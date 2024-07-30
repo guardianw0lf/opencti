@@ -6101,7 +6101,7 @@ export type DraftWorkspaceEdge = {
   node: DraftWorkspace;
 };
 
-export enum DraftWorkspaceOrdering {
+export enum DraftWorkspacesOrdering {
   Name = 'name'
 }
 
@@ -18761,7 +18761,7 @@ export type QueryDraftWorkspacesArgs = {
   after?: InputMaybe<Scalars['ID']['input']>;
   filters?: InputMaybe<FilterGroup>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<DraftWorkspaceOrdering>;
+  orderBy?: InputMaybe<DraftWorkspacesOrdering>;
   orderMode?: InputMaybe<OrderingMode>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
@@ -29196,7 +29196,7 @@ export type ResolversTypes = ResolversObject<{
   DraftWorkspaceAddInput: DraftWorkspaceAddInput;
   DraftWorkspaceConnection: ResolverTypeWrapper<Omit<DraftWorkspaceConnection, 'edges'> & { edges: Array<ResolversTypes['DraftWorkspaceEdge']> }>;
   DraftWorkspaceEdge: ResolverTypeWrapper<Omit<DraftWorkspaceEdge, 'node'> & { node: ResolversTypes['DraftWorkspace'] }>;
-  DraftWorkspaceOrdering: DraftWorkspaceOrdering;
+  DraftWorkspacesOrdering: DraftWorkspacesOrdering;
   EditContext: EditContext;
   EditInput: EditInput;
   EditOperation: EditOperation;
