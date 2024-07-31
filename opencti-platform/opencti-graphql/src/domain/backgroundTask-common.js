@@ -3,7 +3,7 @@ import { uniq } from 'ramda';
 import { generateInternalId, generateStandardId } from '../schema/identifier';
 import { ENTITY_TYPE_BACKGROUND_TASK } from '../schema/internalObject';
 import { now } from '../utils/format';
-import { BYPASS, isUserHasCapability, MEMBER_ACCESS_RIGHT_ADMIN, SETTINGS_SET_ACCESSES } from '../utils/access';
+import { BYPASS, isUserHasCapability, KNOWLEDGE_KNUPDATE, MEMBER_ACCESS_RIGHT_ADMIN, SETTINGS_SET_ACCESSES, SETTINGS_SETLABELS } from '../utils/access';
 import { isKnowledge, KNOWLEDGE_DELETE, KNOWLEDGE_UPDATE } from '../schema/general';
 import { ForbiddenAccess, UnsupportedError } from '../config/errors';
 import { elIndex } from '../database/engine';
@@ -146,9 +146,9 @@ export const createDefaultTask = (user, input, taskType, taskExpectedNumber, sco
 const authorizedAuthoritiesForTask = (scope) => {
   switch (scope) {
     case 'SETTINGS':
-      return ['SETTINGS'];
+      return [SETTINGS_SETLABELS];
     case 'KNOWLEDGE':
-      return ['KNOWLEDGE_KNUPDATE'];
+      return [KNOWLEDGE_KNUPDATE];
     case 'USER':
       return [SETTINGS_SET_ACCESSES];
     default:
