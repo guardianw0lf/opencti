@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import React, { type Dispatch, type SetStateAction, useCallback, useState } from 'react';
+import React, { type Dispatch, type SetStateAction, useCallback, useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight, TuneOutlined } from '@mui/icons-material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,6 +32,12 @@ const DataTablePagination = ({
   } = useDataTableContext();
 
   const { viewStorage: { pageSize }, helpers } = usePaginationLocalStorage(storageKey, initialValues, variant !== DataTableVariant.default);
+
+  // if the number of elements object changes, it means we have changed the filter or search
+  // we reset to page 1 (we might be out-of-bound in this new context)
+  useEffect(() => {
+    setPage(1);
+  }, [numberOfElements]);
 
   const items = pageSize ? Number.parseInt(pageSize, 10) : 25;
   const firstItem = items * ((page ?? 1) - 1) + 1;
