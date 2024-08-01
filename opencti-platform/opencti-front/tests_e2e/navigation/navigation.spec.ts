@@ -9,16 +9,17 @@ import StixCoreObjectDataTab from '../model/StixCoreObjectDataTab.pageModel';
 import GroupingsPage from '../model/grouping.pageModel';
 import GroupingDetailsPage from '../model/groupingDetails.pageModel';
 import MalwareAnalysesPage from '../model/MalwareAnalyses.pageModel';
+import MalwareAnalysesDetailsPage from '../model/MalwareAnalysesDetails.pageModel';
 
 /**
  * Goal: validate that everything is opening wihtout errors in Analyses > Malware analyses.
  * @param page
  */
 const navigateMalwareAnalyses = async (page: Page) => {
-  // const malwareAnalysesNameFromInitData = 'Spelevo EK analysis';
+  const malwareAnalysesNameFromInitData = 'Spelevo EK analysis';
   const malwareAnalysesPage = new MalwareAnalysesPage(page);
   await malwareAnalysesPage.navigateFromMenu();
-  /*
+
   await expect(malwareAnalysesPage.getPage()).toBeVisible();
   await expect(page.getByText(malwareAnalysesNameFromInitData)).toBeVisible();
   await malwareAnalysesPage.getItemFromList(malwareAnalysesNameFromInitData).click();
@@ -28,34 +29,7 @@ const navigateMalwareAnalyses = async (page: Page) => {
 
   // -- Knowledge
   await malwareAnalysesDetailsPage.tabs.goToKnowledgeTab();
-  await expect(page.getByTestId('malware-analyses-knowledge')).toBeVisible();
-  // TODO
-
-  // -- Content
-  await malwareAnalysesDetailsPage.tabs.goToContentTab();
-  const contentTab = new StixDomainObjectContentTabPage(page);
-  await expect(contentTab.getPage()).toBeVisible();
-  await contentTab.getContentMappingViewButton().click();
-  await expect(page.getByRole('button', { name: 'Clear mappings' })).toBeVisible();
-  await contentTab.getContentViewButton().click();
-  await expect(page.getByText('Description', { exact: true })).toBeVisible();
-  await expect(page.getByText('Mappable content')).toBeVisible();
-
-  // -- Entities
-  await malwareAnalysesDetailsPage.tabs.goToEntitiesTab();
-  await expect(page.getByText('Entity types')).toBeVisible();
-  await expect(page.getByText('Add entity')).toBeVisible();
-
-  // -- Artifact / Observables
-  await malwareAnalysesDetailsPage.tabs.goToObservablesTab();
-  const observablesTab = new ContainerObservablesPage(page);
-  await expect(observablesTab.getPage()).toBeVisible();
-
-  // -- Data
-  await malwareAnalysesDetailsPage.tabs.goToDataTab();
-  const dataTab = new StixCoreObjectDataTab(page);
-  await expect(dataTab.getPage()).toBeVisible();
-   */
+  await expect(page.getByPlaceholder('Search these results...')).toBeVisible();
 };
 
 /**
