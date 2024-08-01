@@ -187,7 +187,7 @@ test('Report CRUD', { tag: ['@report', '@knowledge', '@mutation'] }, async ({ pa
   const historyDate = reportDetailsPage.getTextForHeading('Most recent history', format(new Date(), 'MMM d, yyyy'));
   await expect(historyDate).toBeVisible();
 
-  await reportDetailsPage.goToDataTab();
+  await reportDetailsPage.tabs.goToDataTab();
   const file = reportDetailsPage.getTextForHeading('UPLOADED FILES', 'report.test.md');
   await expect(file).toBeVisible();
 
@@ -197,7 +197,7 @@ test('Report CRUD', { tag: ['@report', '@knowledge', '@mutation'] }, async ({ pa
   // region Update the report
   // ------------------------
 
-  await reportDetailsPage.goToOverviewTab();
+  await reportDetailsPage.tabs.goToOverviewTab();
   await expect(page.getByTestId('report-overview')).toBeVisible();
 
   const reportNameUpdate = `Report updated - ${uuid()}`;
@@ -396,7 +396,7 @@ test('Report live entities creation and relationships', { tag: ['@report', '@kno
   // region Manipulate entities on Entities tab
   // ------------------------------------------
 
-  await reportDetailsPage.goToEntitiesTab();
+  await reportDetailsPage.tabs.goToEntitiesTab();
   await entitiesTab.clickAddEntities();
   await entitiesTab.search('note');
   await entitiesTab.addEntity('This is a note');

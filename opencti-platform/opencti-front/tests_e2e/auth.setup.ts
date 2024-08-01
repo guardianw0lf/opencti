@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import { expect, test as setup } from './fixtures/baseFixtures';
 import DashboardPage from './model/dashboard.pageModel';
 import LoginFormPageModel from './model/form/loginForm.pageModel';
-import LeftBarPage from './model/menu/leftBar.pageModel';
 
 const authFile = 'tests_e2e/.setup/.auth/user.json';
 const prepLogoutFile = 'tests_e2e/.setup/.auth/logout-user.json';
