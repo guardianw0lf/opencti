@@ -131,7 +131,7 @@ const ItemMarkings = ({ variant, markingDefinitions, limit }) => {
         }
       }
       return (
-        <Tooltip title={withTooltip ? markingDefinition.definition : undefined}>
+        <Tooltip title={withTooltip ? markingDefinition.definition : undefined} key={markingDefinition.definition}>
           <Chip
             key={markingDefinition.definition}
             className={className}
@@ -219,7 +219,7 @@ const ItemMarkings = ({ variant, markingDefinitions, limit }) => {
         );
     }
     return (
-      <Tooltip title={withTooltip ? markingDefinition.definition : undefined}>
+      <Tooltip title={withTooltip ? markingDefinition.definition : undefined} key={markingDefinition.definition}>
         {chip}
       </Tooltip>
     );
