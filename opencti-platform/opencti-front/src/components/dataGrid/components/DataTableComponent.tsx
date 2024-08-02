@@ -40,6 +40,7 @@ const DataTableComponent = ({
   actions,
   createButton,
   pageSize,
+  disableNavigation,
 }: DataTableProps) => {
   const localStorageColumns = useDataTableLocalStorage<LocalStorageColumns>(`${storageKey}_columns`, {}, true)[0];
   const toggleHelper = useDataTableToggle(storageKey);
@@ -112,6 +113,7 @@ const DataTableComponent = ({
         rootRef,
         actions,
         createButton,
+        disableNavigation,
       } as DataTableContextProps}
     >
       {filtersComponent ?? (variant === DataTableVariant.inline && (
@@ -132,7 +134,7 @@ const DataTableComponent = ({
           flexDirection: 'column',
         }}
       >
-        {(variant !== DataTableVariant.inline && isNotEmptyField(numberOfElements)) && (
+        {(variant === DataTableVariant.default && isNotEmptyField(numberOfElements)) && (
           <DataTablePagination
             page={page}
             setPage={setPage}

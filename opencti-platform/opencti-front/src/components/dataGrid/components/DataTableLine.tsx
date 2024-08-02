@@ -110,9 +110,10 @@ const DataTableLine = ({
     useDataTableToggle,
     useComputeLink,
     actions,
+    disableNavigation,
   } = useDataTableContext();
 
-  const navigable = !actions;
+  const navigable = !actions || disableNavigation;
   const classes = useStyles({ navigable });
 
   const {

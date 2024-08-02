@@ -133,7 +133,12 @@ const DataTableBody = ({
     }
     colSizes['--header-table-size'] = tableSize; // 50 is almost the scrollbar size
     colSizes['--col-table-size'] = tableSize;
-    if (rootRef) {
+    if (variant === DataTableVariant.widget) {
+      if (!rootRef) {
+        throw Error('Invalid configuration for widget list');
+      }
+      colSizes['--table-height'] = rootRef.offsetHeight + 50;
+    } else if (rootRef) {
       colSizes['--table-height'] = rootRef.offsetHeight - 42; // SIZE OF CONTAINER - Nb Elements - Line Size
     } else {
       const rootSize = (document.getElementById('root')?.offsetHeight ?? 0) - settingsMessagesBannerHeight;
@@ -225,13 +230,15 @@ const DataTableBody = ({
       className={classes.tableContainer}
       style={{ ...columnSizeVars }}
     >
-      <DataTableHeaders
-        containerRef={containerRef}
-        effectiveColumns={effectiveColumns}
-        sortBy={sortBy}
-        orderAsc={orderAsc}
-        dataTableToolBarComponent={dataTableToolBarComponent}
-      />
+      {variant !== DataTableVariant.widget && (
+        <DataTableHeaders
+          containerRef={containerRef}
+          effectiveColumns={effectiveColumns}
+          sortBy={sortBy}
+          orderAsc={orderAsc}
+          dataTableToolBarComponent={dataTableToolBarComponent}
+        />
+      )}
       <div
         ref={(node) => setComputeState(node)}
         className={classes.linesContainer}
