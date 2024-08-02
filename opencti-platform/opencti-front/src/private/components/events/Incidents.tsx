@@ -91,6 +91,11 @@ const Incidents: FunctionComponent = () => {
           toolbarFilters={contextFilters}
           exportContext={{ entity_type: 'Incident' }}
           availableEntityTypes={['Incident']}
+          createButton={isFABReplaced && (
+            <Security needs={[KNOWLEDGE_KNUPDATE]}>
+              <IncidentCreation paginationOptions={queryPaginationOptions} />
+            </Security>
+          )}
         />
       )}
       {!isFABReplaced && (
