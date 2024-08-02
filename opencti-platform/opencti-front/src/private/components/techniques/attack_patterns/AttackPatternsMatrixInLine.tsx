@@ -14,8 +14,6 @@ interface AttackPatternsMatrixInLineProps {
   attackPatterns: NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'][];
   dataColumns: DataColumns;
   searchTerm?: string;
-  handleToggleColorsReversed: () => void;
-  currentColorsReversed: boolean;
   hideBar: boolean;
   handleAdd: (entity: TargetEntity) => void;
 }
@@ -23,8 +21,6 @@ const AttackPatternsMatrixInLine: FunctionComponent<AttackPatternsMatrixInLinePr
   attackPatterns,
   marginRight,
   searchTerm,
-  handleToggleColorsReversed,
-  currentColorsReversed,
   hideBar,
   handleAdd,
   dataColumns,
@@ -56,8 +52,6 @@ const AttackPatternsMatrixInLine: FunctionComponent<AttackPatternsMatrixInLinePr
                 attackPatterns={attackPatterns}
                 marginRight={marginRight}
                 searchTerm={searchTerm ?? ''}
-                handleToggleColorsReversed={handleToggleColorsReversed}
-                currentColorsReversed={currentColorsReversed}
                 hideBar={hideBar}
                 handleAdd={handleAdd}
               />

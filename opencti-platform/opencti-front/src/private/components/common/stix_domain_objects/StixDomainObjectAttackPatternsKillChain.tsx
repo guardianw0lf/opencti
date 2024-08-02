@@ -328,8 +328,6 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
         <StixDomainObjectAttackPatternsKillChainMatrixInline
           data={data}
           searchTerm={searchTerm}
-          handleToggleColorsReversed={handleToggleColorsReversed}
-          currentColorsReversed={currentColorsReversed}
           handleAdd={handleAdd}
         />
         )}
