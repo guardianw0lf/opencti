@@ -221,42 +221,42 @@ const Search = () => {
   const dataColumns = {
     entity_type: {
       label: 'Type',
-      flexSize: 10,
+      percentWidth: 10,
       isSortable: true,
     },
     value: {
       label: 'Value',
-      flexSize: 22,
+      percentWidth: 22,
       isSortable: false,
     },
     createdBy: {
       label: 'Author',
-      flexSize: 12,
+      percentWidth: 12,
       isSortable: isRuntimeSort,
     },
     creator: {
       label: 'Creator',
-      flexSize: 12,
+      percentWidth: 12,
       isSortable: isRuntimeSort,
     },
     objectLabel: {
       label: 'Labels',
-      flexSize: 16,
+      percentWidth: 16,
       isSortable: false,
     },
     created_at: {
       label: 'Platform creation date',
-      flexSize: 10,
+      percentWidth: 10,
       isSortable: true,
     },
     analyses: {
       label: 'Analyses',
-      flexSize: 8,
+      percentWidth: 8,
       isSortable: false,
     },
     objectMarking: {
       label: 'Marking',
-      flexSize: 10,
+      percentWidth: 10,
       isSortable: isRuntimeSort,
     },
   };

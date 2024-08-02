@@ -58,15 +58,15 @@ const Incidents: FunctionComponent = () => {
 
   const isRuntimeSort = isRuntimeFieldEnable() ?? false;
   const dataColumns: DataTableProps['dataColumns'] = {
-    name: { flexSize: 20 },
-    incident_type: { flexSize: 8 },
-    severity: { flexSize: 8 },
-    objectAssignee: { flexSize: 12, isSortable: isRuntimeSort },
-    creator: { flexSize: 11, isSortable: isRuntimeSort },
-    objectLabel: { flexSize: 15 },
-    created: { flexSize: 10 },
-    x_opencti_workflow_id: { flexSize: 8 },
-    objectMarking: { flexSize: 8, isSortable: isRuntimeSort },
+    name: { percentWidth: 20 },
+    incident_type: { percentWidth: 8 },
+    severity: { percentWidth: 8 },
+    objectAssignee: { percentWidth: 12, isSortable: isRuntimeSort },
+    creator: { percentWidth: 11, isSortable: isRuntimeSort },
+    objectLabel: { percentWidth: 15 },
+    created: { percentWidth: 10 },
+    x_opencti_workflow_id: { percentWidth: 8 },
+    objectMarking: { percentWidth: 8, isSortable: isRuntimeSort },
   };
 
   const preloadedPaginationProps = {

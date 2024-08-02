@@ -3694,7 +3694,7 @@ const Relationships = () => {
   const dataColumns: DataTableProps['dataColumns'] = {
     fromType: {
       label: 'From type',
-      flexSize: 10,
+      percentWidth: 10,
       isSortable: false,
       render: (node) => (
         <Chip
@@ -3734,7 +3734,7 @@ const Relationships = () => {
     relationship_type: {},
     toType: {
       label: 'To type',
-      flexSize: 10,
+      percentWidth: 10,
       isSortable: false,
       render: (node) => (
         <Chip
@@ -3771,9 +3771,9 @@ const Relationships = () => {
       ),
     },
     toName: {},
-    createdBy: { flexSize: 7, isSortable: isRuntimeSort },
-    creator: { flexSize: 7, isSortable: isRuntimeSort },
-    created_at: { flexSize: 12 },
+    createdBy: { percentWidth: 7, isSortable: isRuntimeSort },
+    creator: { percentWidth: 7, isSortable: isRuntimeSort },
+    created_at: { percentWidth: 12 },
     objectMarking: { isSortable: isRuntimeSort },
   };
 

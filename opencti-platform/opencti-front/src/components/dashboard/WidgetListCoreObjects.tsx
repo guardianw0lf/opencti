@@ -16,18 +16,18 @@ const WidgetListCoreObjects = forwardRef(({
 }: WidgetListCoreObjectsProps, ref: MutableRefObject<HTMLDivElement>) => (
   <DataTableWithoutFragment
     dataColumns={{
-      entity_type: { flexSize: 10 },
-      value: { flexSize: 30 },
+      entity_type: { percentWidth: 10 },
+      value: { percentWidth: 30 },
       date: {
         id: 'date',
         isSortable: false,
-        flexSize: 15,
+        percentWidth: 15,
         label: 'Date',
         render: (({ [dateAttribute]: date }, { fsd }) => fsd(date)),
       },
-      objectLabel: { flexSize: 15 },
-      x_opencti_workflow_id: { flexSize: 15 },
-      objectMarking: { flexSize: 15 },
+      objectLabel: { percentWidth: 15 },
+      x_opencti_workflow_id: { percentWidth: 15 },
+      objectMarking: { percentWidth: 15 },
     }}
     storageKey={'mabite'}
     data={data.map(({ node }) => node)}

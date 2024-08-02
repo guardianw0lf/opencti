@@ -31,7 +31,7 @@ export interface DataTableColumn {
   isSortable?: boolean
   label?: string
   size?: number
-  flexSize: number
+  percentWidth: number
   render?: (v: any, helpers?: any) => ReactNode
   visible?: boolean
   order: number

@@ -52,7 +52,7 @@ const Entities = () => {
   const isRuntimeSort = isRuntimeFieldEnable() ?? false;
 
   const dataColumns: DataTableProps['dataColumns'] = {
-    entity_type: { flexSize: 13 },
+    entity_type: { percentWidth: 13 },
     name: {},
     createdBy: { isSortable: isRuntimeSort },
     creator: { isSortable: isRuntimeSort },

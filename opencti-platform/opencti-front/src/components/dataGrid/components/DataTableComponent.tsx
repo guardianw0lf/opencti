@@ -73,8 +73,8 @@ const DataTableComponent = ({
     '--col-table-size': clientWidth,
   };
   columns.forEach((col) => {
-    if (col.visible && col.flexSize) {
-      const size = col.flexSize * (clientWidth / 100);
+    if (col.visible && col.percentWidth) {
+      const size = col.percentWidth * (clientWidth / 100);
       temporaryColumnsSize[`--header-${col.id}-size`] = size;
       temporaryColumnsSize[`--col-${col.id}-size`] = size;
     }

@@ -97,12 +97,12 @@ const DataTableBody = ({
     const clientWidth = currentRefContainer!.clientWidth - storedSize - (variant === DataTableVariant.inline ? 12 : 0) - 12; // Scrollbar size to prevent alignment issues
     for (let i = startsWithSelect ? 1 : 0; i < columns.length - (endsWithNavigate ? 1 : 0); i += 1) {
       const column = { ...columns[i], ...localStorageColumns[columns[i].id] };
-      const shouldCompute = (!column.size || resize || !localStorageColumns[columns[i].id]?.size) && (column.flexSize && Boolean(computeState));
+      const shouldCompute = (!column.size || resize || !localStorageColumns[columns[i].id]?.size) && (column.percentWidth && Boolean(computeState));
       let size = column.size ?? 200;
 
       // We must compute px size for columns
       if (shouldCompute) {
-        size = column.flexSize * (clientWidth / 100);
+        size = column.percentWidth * (clientWidth / 100);
         column.size = size;
       }
       localColumns[column.id] = { size };
