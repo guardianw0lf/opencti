@@ -6,7 +6,6 @@ import { DataTableContext, defaultColumnsMap } from '../dataTableUtils';
 import { DataTableColumn, DataTableColumns, DataTableContextProps, DataTableProps, DataTableVariant, LocalStorageColumns } from '../dataTableTypes';
 import DataTableHeaders from './DataTableHeaders';
 import { SELECT_COLUMN_SIZE } from './DataTableHeader';
-import { isNotEmptyField } from '../../../utils/utils';
 import DataTablePagination from '../DataTablePagination';
 
 const DataTableComponent = ({
@@ -134,7 +133,7 @@ const DataTableComponent = ({
           flexDirection: 'column',
         }}
       >
-        {(variant === DataTableVariant.default && isNotEmptyField(numberOfElements)) && (
+        {(variant === DataTableVariant.default) && (
           <DataTablePagination
             page={page}
             setPage={setPage}

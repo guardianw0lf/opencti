@@ -23,13 +23,13 @@ interface WidgetContainerProps {
   withoutTitle?: boolean
 }
 
-const WidgetContainer = forwardRef(({
+const WidgetContainer = forwardRef<HTMLDivElement, WidgetContainerProps>(({
   children,
   height,
   title,
   variant,
   withoutTitle = false,
-}: WidgetContainerProps, ref) => {
+}, ref) => {
   const classes = useStyles();
 
   return (

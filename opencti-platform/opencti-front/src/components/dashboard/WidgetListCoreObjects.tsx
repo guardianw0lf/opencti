@@ -1,4 +1,5 @@
-import React, { forwardRef, MutableRefObject } from 'react';
+import React, { forwardRef } from 'react';
+import { v4 as uuid } from 'uuid';
 import DataTableWithoutFragment from '../dataGrid/DataTableWithoutFragment';
 import { DataTableVariant } from '../dataGrid/dataTableTypes';
 
@@ -9,11 +10,11 @@ interface WidgetListCoreObjectsProps {
   publicWidget?: boolean
 }
 
-const WidgetListCoreObjects = forwardRef(({
+const WidgetListCoreObjects = forwardRef<HTMLDivElement, WidgetListCoreObjectsProps>(({
   data,
   dateAttribute,
   publicWidget = false,
-}: WidgetListCoreObjectsProps, ref: MutableRefObject<HTMLDivElement>) => (
+}, ref) => (
   <DataTableWithoutFragment
     dataColumns={{
       entity_type: { percentWidth: 10 },
@@ -29,12 +30,12 @@ const WidgetListCoreObjects = forwardRef(({
       x_opencti_workflow_id: { percentWidth: 15 },
       objectMarking: { percentWidth: 15 },
     }}
-    storageKey={'mabite'}
+    storageKey={uuid()}
     data={data.map(({ node }) => node)}
     globalCount={data.length}
     variant={DataTableVariant.widget}
     disableNavigation={publicWidget}
-    rootRef={ref.current}
+    rootRef={ref?.current}
   />
 ));
 

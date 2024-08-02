@@ -94,7 +94,7 @@ const DataTableBody = ({
     }
     // From there, currentRefContainer is not null
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
-    const clientWidth = currentRefContainer!.clientWidth - storedSize - (variant === DataTableVariant.inline ? 12 : 0) - 12; // Scrollbar size to prevent alignment issues
+    const clientWidth = currentRefContainer!.clientWidth - storedSize - 12; // Scrollbar size to prevent alignment issues
     for (let i = startsWithSelect ? 1 : 0; i < columns.length - (endsWithNavigate ? 1 : 0); i += 1) {
       const column = { ...columns[i], ...localStorageColumns[columns[i].id] };
       const shouldCompute = (!column.size || resize || !localStorageColumns[columns[i].id]?.size) && (column.percentWidth && Boolean(computeState));

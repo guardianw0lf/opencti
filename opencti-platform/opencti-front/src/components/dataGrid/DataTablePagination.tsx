@@ -15,11 +15,11 @@ import { useDataTableContext } from './dataTableUtils';
 const DataTablePagination = ({
   page,
   setPage,
-  numberOfElements,
+  numberOfElements: unstoreNOE,
 }: {
   page: number,
   setPage: Dispatch<SetStateAction<number>>,
-  numberOfElements: NumberOfElements,
+  numberOfElements?: NumberOfElements,
 }) => {
   const { t_i18n } = useFormatter();
 
@@ -31,7 +31,8 @@ const DataTablePagination = ({
     useDataTableLocalStorage,
   } = useDataTableContext();
 
-  const { viewStorage: { pageSize }, helpers } = usePaginationLocalStorage(storageKey, initialValues, variant !== DataTableVariant.default);
+  const { viewStorage: { pageSize, numberOfElements: storedNOE = { original: 0, number: 0, symbol: '' } }, helpers } = usePaginationLocalStorage(storageKey, initialValues, variant !== DataTableVariant.default);
+  const numberOfElements = unstoreNOE ?? storedNOE;
 
   // if the number of elements object changes, it means we have changed the filter or search
   // we reset to page 1 (we might be out-of-bound in this new context)
