@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import useHelper from 'src/utils/hooks/useHelper';
-import { IncidentsLinesQuery } from './incidents/__generated__/IncidentsLinesQuery.graphql';
+import { IncidentsLinesQuery, IncidentsLinesQuery$variables } from './incidents/__generated__/IncidentsLinesQuery.graphql';
 import { IncidentsLines_data$data } from './incidents/__generated__/IncidentsLines_data.graphql';
 import { incidentLineFragment } from './incidents/IncidentLine';
 import { incidentsLinesFragment, incidentsLinesQuery } from './incidents/IncidentsLines';
@@ -10,9 +10,7 @@ import { KNOWLEDGE_KNUPDATE } from '../../../utils/hooks/useGranted';
 import useAuth from '../../../utils/hooks/useAuth';
 import useQueryLoading from '../../../utils/hooks/useQueryLoading';
 import { usePaginationLocalStorage } from '../../../utils/hooks/useLocalStorage';
-
-import { IncidentsLinesPaginationQuery, IncidentsLinesPaginationQuery$variables } from './incidents/__generated__/IncidentsLinesPaginationQuery.graphql';
-import { useBuildEntityTypeBasedFilterContext, emptyFilterGroup, useGetDefaultFilterObject } from '../../../utils/filters/filtersUtils';
+import { emptyFilterGroup, useBuildEntityTypeBasedFilterContext, useGetDefaultFilterObject } from '../../../utils/filters/filtersUtils';
 import { useFormatter } from '../../../components/i18n';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import { DataTableProps } from '../../../components/dataGrid/dataTableTypes';
@@ -41,7 +39,7 @@ const Incidents: FunctionComponent = () => {
     openExports: false,
   };
 
-  const { viewStorage, helpers, paginationOptions } = usePaginationLocalStorage<IncidentsLinesPaginationQuery$variables>(
+  const { viewStorage, helpers, paginationOptions } = usePaginationLocalStorage<IncidentsLinesQuery$variables>(
     LOCAL_STORAGE_KEY,
     initialValues,
   );
@@ -50,8 +48,8 @@ const Incidents: FunctionComponent = () => {
   const queryPaginationOptions = {
     ...paginationOptions,
     filters: contextFilters,
-  } as unknown as IncidentsLinesPaginationQuery$variables;
-  const queryRef = useQueryLoading<IncidentsLinesPaginationQuery>(
+  } as unknown as IncidentsLinesQuery$variables;
+  const queryRef = useQueryLoading<IncidentsLinesQuery>(
     incidentsLinesQuery,
     queryPaginationOptions,
   );
