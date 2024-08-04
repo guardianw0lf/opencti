@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, MutableRefObject } from 'react';
 import { v4 as uuid } from 'uuid';
 import DataTableWithoutFragment from '../dataGrid/DataTableWithoutFragment';
 import { DataTableVariant } from '../dataGrid/dataTableTypes';
@@ -35,7 +35,7 @@ const WidgetListCoreObjects = forwardRef<HTMLDivElement, WidgetListCoreObjectsPr
     globalCount={data.length}
     variant={DataTableVariant.widget}
     disableNavigation={publicWidget}
-    rootRef={ref?.current}
+    rootRef={(ref as MutableRefObject<HTMLDivElement>)?.current}
   />
 ));
 
