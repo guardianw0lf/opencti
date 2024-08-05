@@ -3,7 +3,7 @@ import { TargetEntity } from '@components/common/stix_core_relationships/StixCor
 import {
   StixDomainObjectAttackPatternsKillChainContainer_data$data,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
-import AttackPatternsMatrixInLine from '@components/techniques/attack_patterns/AttackPatternsMatrixInLine';
+import AttackPatternsMatrixLines from '@components/techniques/attack_patterns/AttackPatternsMatrixLines';
 import { NarrativesLinesPaginationQuery$variables } from '@components/techniques/narratives/__generated__/NarrativesLinesPaginationQuery.graphql';
 import useEntityToggle from '../../../../utils/hooks/useEntityToggle';
 import ListLines from '../../../../components/list_lines/ListLines';
@@ -108,7 +108,7 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
         numberOfElements={numberOfElements}
         iconExtension={true}
       >
-        <AttackPatternsMatrixInLine
+        <AttackPatternsMatrixLines
           attackPatterns={attackPatterns}
           dataColumns={dataColumns}
           searchTerm={searchTerm}
