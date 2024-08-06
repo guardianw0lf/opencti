@@ -1,7 +1,6 @@
 import React, { CSSProperties, FunctionComponent, useEffect, useState } from 'react';
 import { createRefetchContainer, graphql } from 'react-relay';
 import { useTheme } from '@mui/material/styles';
-import { TargetEntity } from '@components/common/stix_core_relationships/StixCoreRelationshipCreationFromEntity';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
@@ -11,7 +10,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import StixCoreObjectLabels from '@components/common/stix_core_objects/StixCoreObjectLabels';
 import { Theme } from '@mui/material/styles/createTheme';
-import { useFormatter } from '../../../../components/i18n';
 import { attackPatternsLinesQuery } from './AttackPatternsLines';
 import { emptyFilled, truncate } from '../../../../utils/String';
 import { MESSAGING$ } from '../../../../relay/environment';
@@ -28,9 +26,6 @@ const useStyles = makeStyles<Theme>((theme) => ({
     overflow: 'scroll',
     whiteSpace: 'nowrap',
     paddingBottom: 20,
-    minWidth: 'calc(100vw - 110px)',
-    width: 'calc(100vw - 110px)',
-    maxWidth: 'calc(100vw - 110px)',
     position: 'relative',
   },
   item: {
@@ -78,64 +73,34 @@ interface AttackPatternsMatrixLineProps {
   dataColumns: DataColumns;
   attackPatterns: AttackPattern[];
   onLabelClick: HandleAddFilter;
-  searchTerm: string;
-  handleAdd: (entity: TargetEntity) => void;
   onToggleEntity: (entityId: string) => void;
-  numberOfSelectedElements: number;
-  handleClearSelectedElements: () => void;
-  selectedElements: { [key: string]: AttackPattern };
-  deSelectedElements: { [key: string]: AttackPattern };
-  selectAll: boolean;
   onToggleShiftEntity: (
     index: number,
     entity: any, // AttackPatternsMatrixLine_data
     event?: React.SyntheticEvent
   ) => void;
+  selectedElements: { [key: string]: AttackPattern };
+  deSelectedElements: { [key: string]: AttackPattern };
+  selectAll: boolean;
   index: number;
-  handleToggleSelectAll: () => void;
 }
-
-const commonBodyItemStyle: CSSProperties = {
-  height: 20,
-  fontSize: 13,
-  float: 'left',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  paddingRight: 10,
-};
-
-const commonTextStyle = (theme: Theme, width?: string | number): CSSProperties => ({
-  ...commonBodyItemStyle,
-  color: theme.palette.text.primary,
-  width,
-});
 
 const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps> = ({
   data,
   dataColumns,
   attackPatterns,
-  searchTerm,
-  handleAdd,
   onLabelClick,
   onToggleEntity,
   onToggleShiftEntity,
-  numberOfSelectedElements,
-  handleClearSelectedElements,
   selectedElements,
   deSelectedElements,
   selectAll,
-  handleToggleSelectAll,
   index,
 }) => {
   const theme = useTheme();
-  const { fd } = useFormatter();
   const classes = useStyles();
 
-  const [navOpen, setNavOpen] = useState(localStorage.getItem('navOpen') === 'true');
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [menuElement, setMenuElement] = useState<null | AttackPattern>(null);
-  const [hover, setHover] = useState<{ [key: string]: boolean }>({});
+  const [setNavOpen] = useState(localStorage.getItem('navOpen') === 'true');
 
   useEffect(() => {
     const subscription = MESSAGING$.toggleNav.subscribe({
@@ -159,14 +124,15 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
         {attackPatterns.map((a) => {
           const killChainNames = a.killChainPhases.map((phase) => phase.kill_chain_name).join(', ');
           const phaseName = a.killChainPhases.length > 0 ? a.killChainPhases[0].phase_name : '';
-          console.log('a.objectMarking', a.objectMarking);
+
           return (
             <ListItem
+              key={a.id}
               classes={{ root: classes.item }}
               divider={true}
               button={true}
               component={Link}
-              to={`/dashboard/techniques/attack_patterns/${data.id}`}
+              to={`/dashboard/techniques/attack_patterns/${a.id}`}
             >
               <ListItemIcon
                 style={{ color: theme.palette.primary.main, minWidth: 40 }}
@@ -178,8 +144,8 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
                 <Checkbox
                   edge="start"
                   checked={
-                        (selectAll && !(data.id in (deSelectedElements || {})))
-                        || data.id in (selectedElements || {})
+                        (selectAll && !(a.id in (deSelectedElements || {})))
+                        || a.id in (selectedElements || {})
                     }
                   disableRipple={true}
                 />
@@ -190,9 +156,9 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
               <ListItemText
                 primary={
                   <div key={a.id} className={classes.header}>
-                    <Tooltip title={data.name}>
+                    <Tooltip title={data.killChainPhase}>
                       <div style={{ width: dataColumns.killChainPhase.width }}>
-                        [{truncate(killChainNames, 18)}] {truncate(phaseName, 18)}
+                        [{truncate(killChainNames, 15)}] {truncate(phaseName, 15)}
                       </div>
                     </Tooltip>
                     <div style={{ width: dataColumns.x_mitre_id.width }}>
@@ -201,10 +167,10 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
                     <div style={{ width: dataColumns.name.width }}>
                       {a.name}
                     </div>
-                    <div style={commonTextStyle(theme, dataColumns.objectLabel.width)}>
+                    <div style={{ width: dataColumns.objectLabel.width }}>
                       <StixCoreObjectLabels
                         variant="inList"
-                        labels={data.objectLabel}
+                        labels={a.objectLabel}
                         onClick={onLabelClick}
                       />
                     </div>

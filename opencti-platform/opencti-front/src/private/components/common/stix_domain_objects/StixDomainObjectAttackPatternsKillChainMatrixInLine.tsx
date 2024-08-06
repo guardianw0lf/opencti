@@ -41,10 +41,7 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
   const {
     sortBy,
     orderAsc,
-    filters,
-    openExports,
     numberOfElements,
-    view,
   } = viewStorage;
   const attackPatterns = (data.attackPatterns?.edges ?? []).map((n) => n.node);
 
@@ -61,7 +58,7 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
   const dataColumns = {
     killChainPhase: {
       label: 'Kill chain phase',
-      width: '20%',
+      width: '25%',
       isSortable: false,
     },
     x_mitre_id: {
@@ -71,12 +68,12 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
     },
     name: {
       label: 'Name',
-      width: '10%',
+      width: '15%',
       isSortable: true,
     },
     objectLabel: {
       label: 'Labels',
-      width: '10%',
+      width: '15%',
       isSortable: false,
     },
     created: {
@@ -84,14 +81,9 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
       width: '20%',
       isSortable: true,
     },
-    modified: {
-      label: 'Modification date',
-      width: '10%',
-      isSortable: true,
-    },
     objectMarking: {
       label: 'Marking',
-      width: '10%',
+      width: '15%',
       isSortable: true,
     },
   };
