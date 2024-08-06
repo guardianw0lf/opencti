@@ -784,7 +784,6 @@ const StixCoreRelationshipCreationFromEntity: FunctionComponent<StixCoreRelation
   const [tableRootRef, setTableRootRef] = useState<HTMLDivElement | null>(null);
 
   const renderSelectEntity = (entity_type: string, name = '') => {
-    console.log('name : ', name);
     return (
       <div
         style={{
