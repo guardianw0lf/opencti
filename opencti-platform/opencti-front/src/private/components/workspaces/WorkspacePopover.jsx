@@ -22,7 +22,7 @@ import { deleteNode, insertNode } from '../../../utils/store';
 import handleExportJson from './workspaceExportHandler';
 import WorkspaceDuplicationDialog from './WorkspaceDuplicationDialog';
 import useApiMutation from '../../../utils/hooks/useApiMutation';
-import { getCurrentUserAccessRight } from '../../../utils/authorizedMembers';
+import { useGetCurrentUserAccessRight } from '../../../utils/authorizedMembers';
 
 // Deprecated - https://mui.com/system/styles/basics/
 // Do not use it for new code.
@@ -104,7 +104,7 @@ const WorkspacePopover = ({ workspace, paginationOptions }) => {
   };
 
   const handleCloseEdit = () => setDisplayEdit(false);
-  const { canManage, canEdit } = getCurrentUserAccessRight(workspace);
+  const { canManage, canEdit } = useGetCurrentUserAccessRight(workspace);
   if (!canEdit) {
     return <></>;
   }

@@ -1,6 +1,5 @@
 import { Option } from '@components/common/form/ReferenceField';
-import { Feedback_case$data } from '@components/cases/feedbacks/__generated__/Feedback_case.graphql';
-import { CaseUtils_case$data } from '@components/cases/__generated__/CaseUtils_case.graphql';
+import useGranted, { BYPASS } from './hooks/useGranted';
 
 export const INPUT_AUTHORIZED_MEMBERS = 'authorized_members';
 
@@ -56,8 +55,9 @@ export const authorizedMembersToOptions = (
     });
 };
 
-export const getCurrentUserAccessRight = (entityData: Feedback_case$data | CaseUtils_case$data) => {
-  const canManage = entityData.currentUserAccessRight === 'admin';
+export const useGetCurrentUserAccessRight = (entityData: { currentUserAccessRight: string | null | undefined }) => {
+  const isBypass = useGranted([BYPASS]);
+  const canManage = entityData.currentUserAccessRight === 'admin' || isBypass;
   const canEdit = canManage || entityData.currentUserAccessRight === 'edit';
   const canView = canManage || canEdit || entityData.currentUserAccessRight === 'view';
   return { canManage, canEdit, canView };
