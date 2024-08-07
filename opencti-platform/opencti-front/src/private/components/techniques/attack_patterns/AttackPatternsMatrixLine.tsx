@@ -1,7 +1,6 @@
-import React, { CSSProperties, FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { createRefetchContainer, graphql } from 'react-relay';
 import { useTheme } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -9,7 +8,11 @@ import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import StixCoreObjectLabels from '@components/common/stix_core_objects/StixCoreObjectLabels';
-import { Theme } from '@mui/material/styles/createTheme';
+import { AttackPatternsMatrixLine_data$data } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixLine_data.graphql';
+import { AttackPatternsMatrixColumnsQuery } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixColumnsQuery.graphql';
+import {
+  StixDomainObjectAttackPatternsKillChainContainer_data$data,
+} from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
 import { attackPatternsLinesQuery } from './AttackPatternsLines';
 import { emptyFilled, truncate } from '../../../../utils/String';
 import { MESSAGING$ } from '../../../../relay/environment';
@@ -17,30 +20,6 @@ import { DataColumns } from '../../../../components/list_lines';
 import ItemIcon from '../../../../components/ItemIcon';
 import { HandleAddFilter } from '../../../../utils/hooks/useLocalStorage';
 import ItemMarkings from '../../../../components/ItemMarkings';
-
-const useStyles = makeStyles<Theme>((theme) => ({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    margin: '15px 0 -24px 0',
-    overflow: 'scroll',
-    whiteSpace: 'nowrap',
-    paddingBottom: 20,
-    position: 'relative',
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: '0 10px',
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    borderBottom: theme.palette.divider,
-    marginBottom: 10,
-  },
-}));
 
 interface AttackPattern {
   id: string;
@@ -69,14 +48,14 @@ interface AttackPattern {
 }
 
 interface AttackPatternsMatrixLineProps {
-  data: any; // AttackPatternsMatrixLine_data$data
+  data: AttackPatternsMatrixColumnsQuery
   dataColumns: DataColumns;
-  attackPatterns: AttackPattern[];
+  attackPatterns: NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'][];
   onLabelClick: HandleAddFilter;
   onToggleEntity: (entityId: string) => void;
   onToggleShiftEntity: (
     index: number,
-    entity: any, // AttackPatternsMatrixLine_data
+    entity: AttackPatternsMatrixLine_data$data,
     event?: React.SyntheticEvent
   ) => void;
   selectedElements: { [key: string]: AttackPattern };
@@ -98,7 +77,6 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
   index,
 }) => {
   const theme = useTheme();
-  const classes = useStyles();
 
   const [setNavOpen] = useState(localStorage.getItem('navOpen') === 'true');
 
@@ -114,8 +92,16 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
 
   return (
     <div
-      className={classes.container}
-      style={{ height: 'calc(100vh - 310px)' }}
+      style={{
+        height: 'calc(100vh - 310px)',
+        display: 'flex',
+        flexDirection: 'row',
+        margin: '15px 0 -24px 0',
+        overflow: 'scroll',
+        whiteSpace: 'nowrap',
+        paddingBottom: 20,
+        position: 'relative',
+      }}
     >
       <div
         id="container"
@@ -128,7 +114,12 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
           return (
             <ListItem
               key={a.id}
-              classes={{ root: classes.item }}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: '0 10px',
+              }}
               divider={true}
               button={true}
               component={Link}
@@ -155,7 +146,15 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <div key={a.id} className={classes.header}>
+                  <div
+                    key={a.id}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      borderBottom: theme.palette.divider,
+                      marginBottom: 10,
+                    }}
+                  >
                     <Tooltip title={data.killChainPhase}>
                       <div style={{ width: dataColumns.killChainPhase.width }}>
                         [{truncate(killChainNames, 15)}] {truncate(phaseName, 15)}

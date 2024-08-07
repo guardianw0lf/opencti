@@ -8,7 +8,7 @@ import { NarrativesLinesPaginationQuery$variables } from '@components/techniques
 import useEntityToggle from '../../../../utils/hooks/useEntityToggle';
 import ListLines from '../../../../components/list_lines/ListLines';
 import { usePaginationLocalStorage } from '../../../../utils/hooks/useLocalStorage';
-import { emptyFilterGroup, useGetDefaultFilterObject } from '../../../../utils/filters/filtersUtils';
+import { emptyFilterGroup } from '../../../../utils/filters/filtersUtils';
 
 const LOCAL_STORAGE_KEY = 'StixDomainObjectAttackPatternsKillChainMatrixInline';
 
@@ -33,7 +33,6 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
       openExports: false,
       filters: {
         ...emptyFilterGroup,
-        filters: useGetDefaultFilterObject(['In regards of'], ['Narrative']),
       },
       view: 'lines',
     },
@@ -53,7 +52,7 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
     deSelectedElements,
     selectAll,
     handleToggleSelectAll,
-  } = useEntityToggle('attackPatterns');
+  } = useEntityToggle('Attack-Pattern');
 
   const dataColumns = {
     killChainPhase: {
