@@ -328,7 +328,6 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
         <StixDomainObjectAttackPatternsKillChainMatrixInline
           data={data}
           searchTerm={searchTerm}
-          handleAdd={handleAdd}
         />
         )}
         {currentView === 'courses-of-action' && (

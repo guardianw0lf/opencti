@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { createRefetchContainer, graphql } from 'react-relay';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
@@ -8,14 +8,12 @@ import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import StixCoreObjectLabels from '@components/common/stix_core_objects/StixCoreObjectLabels';
-import { AttackPatternsMatrixLine_data$data } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixLine_data.graphql';
 import { AttackPatternsMatrixColumnsQuery } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixColumnsQuery.graphql';
 import {
   StixDomainObjectAttackPatternsKillChainContainer_data$data,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
 import { attackPatternsLinesQuery } from './AttackPatternsLines';
 import { emptyFilled, truncate } from '../../../../utils/String';
-import { MESSAGING$ } from '../../../../relay/environment';
 import { DataColumns } from '../../../../components/list_lines';
 import ItemIcon from '../../../../components/ItemIcon';
 import { HandleAddFilter } from '../../../../utils/hooks/useLocalStorage';
@@ -52,10 +50,13 @@ interface AttackPatternsMatrixLineProps {
   dataColumns: DataColumns;
   attackPatterns: NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'][];
   onLabelClick: HandleAddFilter;
-  onToggleEntity: (entityId: string) => void;
+  onToggleEntity: (
+    entity: AttackPatternsMatrixColumnsQuery,
+    event?: React.SyntheticEvent
+  ) => void;
   onToggleShiftEntity: (
     index: number,
-    entity: AttackPatternsMatrixLine_data$data,
+    entity: AttackPatternsMatrixColumnsQuery,
     event?: React.SyntheticEvent
   ) => void;
   selectedElements: { [key: string]: AttackPattern };
@@ -78,38 +79,20 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
 }) => {
   const theme = useTheme();
 
-  const [setNavOpen] = useState(localStorage.getItem('navOpen') === 'true');
-
-  useEffect(() => {
-    const subscription = MESSAGING$.toggleNav.subscribe({
-      next: () => setNavOpen(localStorage.getItem('navOpen') === 'true'),
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
   return (
     <div
       style={{
         height: 'calc(100vh - 310px)',
-        display: 'flex',
-        flexDirection: 'row',
-        margin: '15px 0 -24px 0',
-        overflow: 'scroll',
+        margin: '10px 0 -24px 0',
+        overflow: 'hidden',
         whiteSpace: 'nowrap',
         paddingBottom: 20,
-        position: 'relative',
       }}
     >
-      <div
-        id="container"
-        style={{ width: '100%' }}
-      >
+      <div>
         {attackPatterns.map((a) => {
-          const killChainNames = a.killChainPhases.map((phase) => phase.kill_chain_name).join(', ');
-          const phaseName = a.killChainPhases.length > 0 ? a.killChainPhases[0].phase_name : '';
+          const killChainNames = (a.killChainPhases || []).map((phase) => phase.kill_chain_name).join(', ');
+          const phaseName = (a.killChainPhases && a.killChainPhases.length > 0) ? a.killChainPhases[0].phase_name : '';
 
           return (
             <ListItem
@@ -155,25 +138,25 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
                       marginBottom: 10,
                     }}
                   >
-                    <Tooltip title={data.killChainPhase}>
-                      <div style={{ width: dataColumns.killChainPhase.width }}>
+                    <Tooltip title={`[${killChainNames}] ${phaseName}`}>
+                      <div style={{ width: dataColumns.killChainPhase.width as string | number }}>
                         [{truncate(killChainNames, 15)}] {truncate(phaseName, 15)}
                       </div>
                     </Tooltip>
-                    <div style={{ width: dataColumns.x_mitre_id.width }}>
+                    <div style={{ width: dataColumns.x_mitre_id.width as string | number }}>
                       {emptyFilled(a.x_mitre_id)}
                     </div>
-                    <div style={{ width: dataColumns.name.width }}>
+                    <div style={{ width: dataColumns.name.width as string | number }}>
                       {a.name}
                     </div>
-                    <div style={{ width: dataColumns.objectLabel.width }}>
+                    <div style={{ width: dataColumns.objectLabel.width as string | number }}>
                       <StixCoreObjectLabels
                         variant="inList"
                         labels={a.objectLabel}
                         onClick={onLabelClick}
                       />
                     </div>
-                    <div style={{ width: dataColumns.created.width }}>
+                    <div style={{ width: dataColumns.created.width as string | number }}>
                       {a.created}
                     </div>
                     <div>

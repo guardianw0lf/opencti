@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { TargetEntity } from '@components/common/stix_core_relationships/StixCoreRelationshipCreationFromEntity';
 import {
   StixDomainObjectAttackPatternsKillChainContainer_data$data,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
@@ -13,15 +12,12 @@ import { emptyFilterGroup } from '../../../../utils/filters/filtersUtils';
 const LOCAL_STORAGE_KEY = 'StixDomainObjectAttackPatternsKillChainMatrixInline';
 
 interface StixDomainObjectAttackPatternsKillChainMatrixProps {
-  searchTerm: string;
   data: StixDomainObjectAttackPatternsKillChainContainer_data$data;
-  handleAdd: (entity: TargetEntity) => void;
 }
+
 const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<StixDomainObjectAttackPatternsKillChainMatrixProps> = (
   {
-    searchTerm,
     data,
-    handleAdd,
   },
 ) => {
   const { viewStorage, helpers } = usePaginationLocalStorage<NarrativesLinesPaginationQuery$variables>(
@@ -40,12 +36,10 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
   const {
     sortBy,
     orderAsc,
-    numberOfElements,
   } = viewStorage;
   const attackPatterns = (data.attackPatterns?.edges ?? []).map((n) => n.node);
 
   const {
-    onToggleEntity,
     numberOfSelectedElements,
     handleClearSelectedElements,
     selectedElements,
@@ -96,15 +90,11 @@ const StixDomainObjectAttackPatternsKillChainMatrixInline: FunctionComponent<Sti
         dataColumns={dataColumns}
         handleToggleSelectAll={handleToggleSelectAll}
         selectAll={selectAll}
-        numberOfElements={numberOfElements}
         iconExtension={true}
       >
         <AttackPatternsMatrixLines
           attackPatterns={attackPatterns}
           dataColumns={dataColumns}
-          searchTerm={searchTerm}
-          handleAdd={handleAdd}
-          onToggleEntity={onToggleEntity}
           numberOfSelectedElements={numberOfSelectedElements}
           handleClearSelectedElements={handleClearSelectedElements}
           selectedElements={selectedElements}

@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { TargetEntity } from '@components/common/stix_core_relationships/StixCoreRelationshipCreationFromEntity';
 import {
   StixDomainObjectAttackPatternsKillChainContainer_data$data,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
@@ -10,19 +9,11 @@ import { AttackPatternsMatrixColumnsQuery } from './__generated__/AttackPatterns
 import { DataColumns } from '../../../../components/list_lines';
 
 interface AttackPatternsMatrixLinesProps {
-  marginRight?: boolean;
   attackPatterns: NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'][];
   dataColumns: DataColumns;
-  searchTerm?: string;
-  hideBar: boolean;
-  handleAdd: (entity: TargetEntity) => void;
 }
 const AttackPatternsMatrixLines: FunctionComponent<AttackPatternsMatrixLinesProps> = ({
   attackPatterns,
-  marginRight,
-  searchTerm,
-  hideBar,
-  handleAdd,
   dataColumns,
 }) => {
   return (
@@ -50,10 +41,6 @@ const AttackPatternsMatrixLines: FunctionComponent<AttackPatternsMatrixLinesProp
                 data={props}
                 dataColumns={dataColumns}
                 attackPatterns={attackPatterns}
-                marginRight={marginRight}
-                searchTerm={searchTerm ?? ''}
-                hideBar={hideBar}
-                handleAdd={handleAdd}
               />
             );
           }
