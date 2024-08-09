@@ -17892,6 +17892,7 @@ export enum PublicDashboardsOrdering {
   Enabled = 'enabled',
   Name = 'name',
   UpdatedAt = 'updated_at',
+  UriKey = 'uri_key',
   UserId = 'user_id'
 }
 
