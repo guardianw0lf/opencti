@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { graphql, useQueryLoader } from 'react-relay';
 import Tooltip from '@mui/material/Tooltip';
-import { FileDownloadOutlined, InvertColorsOffOutlined, ViewColumnOutlined, ViewListOutlined } from '@mui/icons-material';
+import { FileDownloadOutlined, InvertColorsOffOutlined, ViewColumnOutlined } from '@mui/icons-material';
 import { ProgressWrench } from 'mdi-material-ui';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -16,6 +16,8 @@ import {
   StixDomainObjectAttackPatternsKillChainQuery$variables,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainQuery.graphql';
 import StixDomainObjectAttackPatternsKillChainMatrixInline from '@components/common/stix_domain_objects/StixDomainObjectAttackPatternsKillChainMatrixInLine';
+import { ListViewIcon, SublistViewIcon } from 'filigran-icon';
+import FiligranIcon from '@components/common/FiligranIcon';
 import StixCoreObjectsExports from '../stix_core_objects/StixCoreObjectsExports';
 import SearchInput from '../../../../components/SearchInput';
 import Security from '../../../../utils/Security';
@@ -227,8 +229,8 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
                 onClick={() => handleChangeView('matrix-in-line')}
                 value={'matrix-in-line'}
               >
-                <ViewColumnOutlined
-                  fontSize="small"
+                <FiligranIcon icon={ListViewIcon}
+                  size="small"
                   color={currentView === 'matrix-in-line' ? 'secondary' : 'primary'}
                 />
               </ToggleButton>
@@ -238,8 +240,8 @@ const StixDomainObjectAttackPatternsKillChain: FunctionComponent<StixDomainObjec
                 onClick={() => handleChangeView('list')}
                 value={'list'}
               >
-                <ViewListOutlined
-                  fontSize="small"
+                <FiligranIcon icon={SublistViewIcon}
+                  size="small"
                   color={currentView === 'list' ? 'secondary' : 'primary'}
                 />
               </ToggleButton>
