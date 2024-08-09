@@ -8,10 +8,11 @@ import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import StixCoreObjectLabels from '@components/common/stix_core_objects/StixCoreObjectLabels';
-import { AttackPatternsMatrixColumnsQuery } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixColumnsQuery.graphql';
 import {
   StixDomainObjectAttackPatternsKillChainContainer_data$data,
 } from '@components/common/stix_domain_objects/__generated__/StixDomainObjectAttackPatternsKillChainContainer_data.graphql';
+import { KeyboardArrowRightOutlined } from '@mui/icons-material';
+import { AttackPatternsMatrixLine_data$data } from '@components/techniques/attack_patterns/__generated__/AttackPatternsMatrixLine_data.graphql';
 import { attackPatternsLinesQuery } from './AttackPatternsLines';
 import { emptyFilled, truncate } from '../../../../utils/String';
 import { DataColumns } from '../../../../components/list_lines';
@@ -19,54 +20,29 @@ import ItemIcon from '../../../../components/ItemIcon';
 import { HandleAddFilter } from '../../../../utils/hooks/useLocalStorage';
 import ItemMarkings from '../../../../components/ItemMarkings';
 
-interface AttackPattern {
-  id: string;
-  name: string;
-  description?: string;
-  x_mitre_id: string;
-  objectMarking: {
-    id: string;
-    definition_type: string;
-    definition: string;
-    x_opencti_order: string;
-    x_opencti_color: string;
-  };
-  created: string;
-  objectLabel?: {
-    id: string;
-    value: string;
-    color: string;
-  };
-  subAttackPatternsIds?: string[];
-  level?: number;
-  killChainPhases: {
-    kill_chain_name: string;
-    phase_name: string
-  }[];
-}
+export type AttackPatternNode = NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'];
 
 interface AttackPatternsMatrixLineProps {
-  data: AttackPatternsMatrixColumnsQuery
+  data: AttackPatternsMatrixLine_data$data
   dataColumns: DataColumns;
   attackPatterns: NonNullable<NonNullable<StixDomainObjectAttackPatternsKillChainContainer_data$data>['attackPatterns']>['edges'][0]['node'][];
   onLabelClick: HandleAddFilter;
   onToggleEntity: (
-    entity: AttackPatternsMatrixColumnsQuery,
+    entity: AttackPatternNode,
     event?: React.SyntheticEvent
   ) => void;
   onToggleShiftEntity: (
     index: number,
-    entity: AttackPatternsMatrixColumnsQuery,
+    entity: AttackPatternNode,
     event?: React.SyntheticEvent
   ) => void;
-  selectedElements: { [key: string]: AttackPattern };
-  deSelectedElements: { [key: string]: AttackPattern };
+  selectedElements: Record<string, AttackPatternNode>;
+  deSelectedElements: Record<string, AttackPatternNode>;
   selectAll: boolean;
   index: number;
 }
 
 const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps> = ({
-  data,
   dataColumns,
   attackPatterns,
   onLabelClick,
@@ -111,8 +87,8 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
               <ListItemIcon
                 style={{ color: theme.palette.primary.main, minWidth: 40 }}
                 onClick={(event) => (event.shiftKey
-                  ? onToggleShiftEntity(index, data, event)
-                  : onToggleEntity(data, event))
+                  ? onToggleShiftEntity(index, a, event)
+                  : onToggleEntity(a, event))
                   }
               >
                 <Checkbox
@@ -169,6 +145,9 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
                   </div>
                   }
               />
+              <ListItemIcon style={{ position: 'absolute', right: -10 }}>
+                <KeyboardArrowRightOutlined />
+              </ListItemIcon>
             </ListItem>
           );
         })}
@@ -177,7 +156,7 @@ const AttackPatternsMatrixLine: FunctionComponent<AttackPatternsMatrixLineProps>
   );
 };
 
-export const AttackPatternsMatrixLineQuery = graphql`
+export const attackPatternsMatrixLineQuery = graphql`
     query AttackPatternsMatrixLineQuery(
         $orderBy: AttackPatternsOrdering
         $orderMode: OrderingMode
